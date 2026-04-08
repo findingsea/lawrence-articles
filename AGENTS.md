@@ -33,13 +33,13 @@ lawrence-articles/
 
 | 文件类型 | 命名格式 | 示例 |
 |---------|---------|------|
-| 单篇草稿 | `draft/YYYY-MM-文章主题.md` | `draft/2026-04-backend-engineer-ai-era.md` |
 | 子目录草稿 | `draft/YYYY-MM-主题/文章主题.md` | `draft/2026-04-ai-era-engineer-adaptation/ai-era-engineer-adaptation.md` |
 | memo 文件 | `draft/YYYY-MM-主题/memo.md` | `draft/2026-04-ai-era-engineer-adaptation/memo.md` |
 | 正式文章 | `post/YYYY-MM-文章主题.md` | `post/2026-04-ai-era-engineer-adaptation.md` |
 
 **注意**：
 - 子目录中的草稿文件**必须与文件夹同名**（去掉日期前缀）
+- **不要单独创建 `draft.md` 文件**，文章内容直接写在 `draft/YYYY-MM-主题/文章主题.md` 中
 - memo 文件**保持原名** `memo.md`，用于记录讨论和素材
 
 ## 协作写作流程
