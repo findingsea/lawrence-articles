@@ -1,3 +1,9 @@
+---
+theme: default
+themeName: "默认主题"
+title: "ai-era-engineer-adaptation"
+---
+
 # AI 时代软件工程师的适应与能力模型演变
 
 > 状态：初稿  

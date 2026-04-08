@@ -1,3 +1,9 @@
+---
+theme: default
+themeName: "默认主题"
+title: "memo"
+---
+
 # AI 时代软件工程师适应与能力模型 — 备忘
 
 ## 讨论记录
