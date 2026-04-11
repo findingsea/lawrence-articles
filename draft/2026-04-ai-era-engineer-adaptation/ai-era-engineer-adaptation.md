@@ -18,25 +18,11 @@ title: "ai-era-engineer-adaptation"
 
 在互联网上，行业的先行者们的观点会更激进。
 
-**Andrej Karpathy**，OpenAI 联合创始人、前特斯拉 AI 负责人，在 2025 年 2 月发了一条推文，造了个词叫「Vibe Coding」——「I just type and code comes out」。大半年过去，这个词进了 Collins 词典，成了 2025 年度词汇。他的意思是：完全跟着感觉走，用自然语言描述需求，AI 生成代码，你只负责验收。
+Sherwin Wu，OpenAI API 及开发者平台工程负责人，透露说公司内部 **95% 的工程师已使用 Codex 编程**，而且 OpenAI 内部正在做一个激进的实验——一个团队在维护一个 **100% 由 Codex 编写的代码库**。他认为，工程师的角色正在从「独立贡献者」转变为「技术负责人」——「他们正在管理成群的智能体（agents）。这真的感觉就像我们是巫师，在施展各种咒语，而这些咒语就像是出去为你做事。」
 
-> 来源：[X (Twitter)](https://x.com/karpathy)，2025 年 2 月
+Bret Taylor，OpenAI 董事会主席 在播客中坦言，尽管 AI 工具正在迅速改变软件开发方式，但他个人对手写代码仍然保持着深厚的情感联系，在心理上很难完全接受将编程工作交给 AI 完成。他正在努力改变自己对代码创作的执念。
 
-**Sherwin Wu**，OpenAI API 及开发者平台工程负责人，在 2026 年 4 月透露：公司内部 **95% 的工程师已使用 Codex 编程**，**100% 的 PR 由 Codex 审查**。更激进的是，OpenAI 内部正在做一个实验——一个团队在维护一个 **100% 由 Codex 编写的代码库**。他说：「工程师的角色正在从独立贡献者转变为技术负责人——他们正在管理成群的智能体。这真的感觉就像我们是巫师，在施展各种咒语。」
-
-> 来源：[华尔街见闻](https://wallstreetcn.com/articles/3765755)，2026-04-10
-
-**Garry Tan**，Y Combinator CEO，在 SXSW 2026 上说他现在每天只睡 4 小时，因为太兴奋了——「I have cyber psychosis」。他用 AI 重现了自己当年的创业项目：原本需要 $10M 融资、10 个人、2 年时间，现在一个人用 AI agents 就能跑三个这样的项目。
-
-> 来源：[TechCrunch](https://techcrunch.com/2026/03/17/why-garry-tans-claude-code-setup-has-gotten-so-much-love-and-hate/)，2026-03-17
-
-**Sam Altman**，OpenAI CEO，说未来的软件开发者不再是功能堆叠者，而是「提示设计师、语境导演、模型调教师」。
-
-> 来源：抖音视频引用，2025-06-28
-
-**Anthropic 的研究报告**显示，**74.5% 的编程工作可能被 AI 取代**，初级程序员的替代率甚至超过 85%。
-
-> 来源：[Anthropic 研究](https://blog.csdn.net/python123456_/article/details/159324356)（CSDN 引用）
+Anthropic 的研究报告则研究显示，**74.5% 的编程工作可能被 AI 取代**，初级程序员的替代率甚至超过 85%。
 
 这些声音放在一起，指向一个清晰的图景：**不是程序员会不会消失的问题，而是程序员需要进化的问题。**
 
