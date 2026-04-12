@@ -9,15 +9,15 @@
 ```
 lawrence-articles/
 ├── AGENTS.md          # 本文件：项目规范与写作指南
-├── draft/             # 草稿（AI 生成，待用户微调）
-│   ├── YYYY-MM-文章主题.md          # 单篇文章草稿
-│   └── YYYY-MM-文章主题/            # 复杂文章子目录
-│       ├── memo.md                   # 讨论记录、素材汇总
-│       └── 文章主题.md               # 正式草稿（与文件夹同名）
-├── post/              # 正式发布的文章（用户确认后移动至此）
-│   └── YYYY-MM-文章主题.md
-└── image/             # 图片资源
+├── post/              # 文章目录（含已发布和进行中的文章）
+│   └── YYYY-MM-文章主题/            # 每篇文章一个文件夹
+│       ├── 文章主题.md               # 主文章
+│       ├── memo.md                  # 调研笔记、讨论记录
+│       └── image/                   # 图片素材
+└── image/             # 根级图片资源（较少用）
 ```
+
+**说明**：不单独设 `draft/` 目录，所有文章（含进行中和已发布的）都放在 `post/` 下，用 Git 分支区分状态。写新文章时从 main 新建 feature 分支，merge 后即发布。
 
 ## 命名规范
 
@@ -33,28 +33,45 @@ lawrence-articles/
 
 | 文件类型 | 命名格式 | 示例 |
 |---------|---------|------|
-| 子目录草稿 | `draft/YYYY-MM-主题/文章主题.md` | `draft/2026-04-ai-era-engineer-adaptation/ai-era-engineer-adaptation.md` |
-| memo 文件 | `draft/YYYY-MM-主题/memo.md` | `draft/2026-04-ai-era-engineer-adaptation/memo.md` |
-| 正式文章 | `post/YYYY-MM-文章主题.md` | `post/2026-04-ai-era-engineer-adaptation.md` |
+| 主文章 | `post/YYYY-MM-主题/文章主题.md` | `post/2026-04-ai-era-engineer-adaptation/ai-era-engineer-adaptation.md` |
+| memo 文件 | `post/YYYY-MM-主题/memo.md` | `post/2026-04-ai-era-engineer-adaptation/memo.md` |
 
 **注意**：
-- 子目录中的草稿文件**必须与文件夹同名**（去掉日期前缀）
-- **不要单独创建 `draft.md` 文件**，文章内容直接写在 `draft/YYYY-MM-主题/文章主题.md` 中
+- 文章文件**与文件夹同名**（去掉日期前缀）
 - memo 文件**保持原名** `memo.md`，用于记录讨论和素材
+- 图片放在 `post/YYYY-MM-主题/image/` 下
 
-## 协作写作流程
+## 协作写作流程（已验证版本）
 
 ```
-讨论 → memo → 草稿 → 用户修改 → 再讨论 → 正式文章
+讨论 → 写入 memo.md → AI 生成草稿 → 用户大幅修改 → 迭代完善 → merge 发布
          ↑___________________________________↓
 ```
 
-1. **讨论阶段**：用户与 AI 就文章主题进行讨论
-2. **记录到 memo**：AI 将讨论内容整理到 `draft/YYYY-MM-主题/memo.md`
-3. **生成草稿**：AI 基于 memo 生成 `draft/YYYY-MM-主题/主题.md`
-4. **用户修改**：用户基于草稿进行修改，添加个人观点
-5. **迭代讨论**：继续讨论完善
-6. **正式发布**：定稿后移动到 `post/YYYY-MM-主题.md`
+**实际协作模式**（来自 2026-04 AI 时代生存思考文章写作验证）：
+
+1. **讨论阶段**：用户与 AI 就文章主题进行讨论（飞书消息来回）
+2. **记录到 memo**：AI 将讨论内容、调研摘要、参考资料链接整理到 `memo.md`
+3. **生成草稿**：AI 基于 memo 生成文章草稿，写入 `主题.md`
+4. **用户修改**：用户在本地修改草稿，幅度通常很大（删 30-50% 内容是常态）
+5. **迭代讨论**：用户发回修改稿 → AI 从修改中学习规则 → 下一轮写得更准
+6. **Git 协作**：每轮修改 commit push，用户 merge 到 main
+
+**关键特点**：
+- 用户给的是执行型反馈（不是「这里不好」，而是「改成这样」），很高效
+- AI 从用户删改中学到写作风格，修改量逐轮减少
+- 用户有很强的写作风格感，会主动删 AI 味的表述
+- 数据必须有来源，无来源宁可删掉不用
+
+### Git 分支使用规范
+
+```
+feature/YYYY-MM-文章主题   # 当前文章的分支
+main                        # 已发布的正式内容
+```
+
+- 每次 push 到 feature 分支，用户 merge 到 main
+- commit message 用 `feat:` `fix:` `refactor:` `style:` 等前缀
 
 ## memo 文件用途
 
