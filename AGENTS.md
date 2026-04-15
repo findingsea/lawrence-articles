@@ -1,3 +1,9 @@
+---
+theme: default
+themeName: "默认主题"
+title: "AGENTS"
+---
+
 # Lawrence 的文章库 (lawrence-articles)
 
 ## 项目说明
