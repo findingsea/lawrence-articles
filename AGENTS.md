@@ -29,18 +29,18 @@ lawrence-articles/
 
 ### 文件夹命名
 - **格式**：`YYYY-MM-文章主题/`
-- **示例**：`2026-04-ai-era-engineer-adaptation/`
+- **示例**：`2026-04-你记不住读过的书/`
 - **规则**：
   - 年份-月份开头（4位年份 + 2位月份）
-  - 使用英文小写，单词用连字符分隔
+  - 使用中文命名
   - 简洁明了，能概括文章核心内容
 
 ### 文件命名
 
 | 文件类型 | 命名格式 | 示例 |
 |---------|---------|------|
-| 主文章 | `post/YYYY-MM-主题/文章主题.md` | `post/2026-04-ai-era-engineer-adaptation/ai-era-engineer-adaptation.md` |
-| memo 文件 | `post/YYYY-MM-主题/memo.md` | `post/2026-04-ai-era-engineer-adaptation/memo.md` |
+| 主文章 | `post/YYYY-MM-主题/文章主题.md` | `post/2026-04-你记不住读过的书/你记不住读过的书.md` |
+| memo 文件 | `post/YYYY-MM-主题/memo.md` | `post/2026-04-你记不住读过的书/memo.md` |
 
 **注意**：
 - 文章文件**与文件夹同名**（去掉日期前缀）
