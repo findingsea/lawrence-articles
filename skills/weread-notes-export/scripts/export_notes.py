@@ -175,6 +175,7 @@ def build_markdown(book_title, author, bookmarks_by_chapter, chapters_map, revie
             lines.append(f'> {bm["text"]}\n')
             if bm["date"]:
                 lines.append(f'*—— {bm["date"]}*\n')
+            lines.append('\n')
             total_bookmarks += 1
 
         # 想法（按 chapterUid 匹配）
@@ -185,6 +186,7 @@ def build_markdown(book_title, author, bookmarks_by_chapter, chapters_map, revie
             lines.append(f'**想法：** {r["content"]}\n')
             if r["date"]:
                 lines.append(f'*—— {r["date"]}*\n')
+            lines.append('\n')
             total_reviews += 1
 
     # 末尾统计
