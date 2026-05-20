@@ -222,9 +222,9 @@ def main():
     md_content = build_markdown(title, author, bookmarks_by_chapter, chapters_map, reviews_by_chapter)
 
     # 写入文件
-    article_dir = os.path.join(output_dir, "note", title)
+    article_dir = os.path.join(output_dir, "note", f"《{title}》")
     os.makedirs(article_dir, exist_ok=True)
-    filename = f"{title}-摘抄.md"
+    filename = f"《{title}》-摘抄.md"
     filepath = os.path.join(article_dir, filename)
     with open(filepath, "w", encoding="utf-8") as f:
         f.write(md_content)
