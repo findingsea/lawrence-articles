@@ -15,23 +15,23 @@ title: "AGENTS"
 ```
 lawrence-articles/
 ├── AGENTS.md          # 本文件：项目规范与写作指南
-├── post/              # 文章目录（含已发布和进行中的文章）
+├── posts/              # 文章目录（含已发布和进行中的文章）
 │   ├── index.md       # 文章索引：按主题分类，供 AI 快速定位文章
 │   └── YYYY-MM-文章主题/            # 每篇文章一个文件夹
 │       ├── 文章主题.md               # 主文章
 │       ├── memo.md                  # 调研笔记、讨论记录
-│       └── image/                   # 图片素材
-└── image/             # 根级图片资源（较少用）
+│       └── images/                   # 图片素材
+└── images/             # 根级图片资源（较少用）
 ```
 
-**说明**：不单独设 `draft/` 目录，所有文章（含进行中和已发布的）都放在 `post/` 下，用 Git 分支区分状态。写新文章时从 main 新建 feature 分支，merge 后即发布。
+**说明**：不单独设 `draft/` 目录，所有文章（含进行中和已发布的）都放在 `posts/` 下，用 Git 分支区分状态。写新文章时从 main 新建 feature 分支，merge 后即发布。
 
-### 文章索引（post/index.md）
+### 文章索引（posts/index.md）
 
-`post/index.md` 是所有文章的分类索引，供 AI 快速定位相关文章，避免每次遍历全部文件。
+`posts/index.md` 是所有文章的分类索引，供 AI 快速定位相关文章，避免每次遍历全部文件。
 
 **用途**：
-- AI 需要检索过往文章时，先读 `post/index.md`，根据总览表格定位到相关分类，再只读对应文章
+- AI 需要检索过往文章时，先读 `posts/index.md`，根据总览表格定位到相关分类，再只读对应文章
 - 写新文章时，AI 可以通过索引发现相关主题的过往文章，保持观点连贯
 
 **维护规则**：
@@ -54,13 +54,13 @@ lawrence-articles/
 
 | 文件类型 | 命名格式 | 示例 |
 |---------|---------|------|
-| 主文章 | `post/YYYY-MM-主题/文章主题.md` | `post/2026-04-你记不住读过的书/你记不住读过的书.md` |
-| memo 文件 | `post/YYYY-MM-主题/memo.md` | `post/2026-04-你记不住读过的书/memo.md` |
+| 主文章 | `posts/YYYY-MM-主题/文章主题.md` | `posts/2026-04-你记不住读过的书/你记不住读过的书.md` |
+| memo 文件 | `posts/YYYY-MM-主题/memo.md` | `posts/2026-04-你记不住读过的书/memo.md` |
 
 **注意**：
 - 文章文件**与文件夹同名**（去掉日期前缀）
 - memo 文件**保持原名** `memo.md`，用于记录讨论和素材
-- 图片放在 `post/YYYY-MM-主题/image/` 下
+- 图片放在 `posts/YYYY-MM-主题/images/` 下
 
 ## 协作写作流程（已验证版本）
 
@@ -72,13 +72,13 @@ lawrence-articles/
 **实际协作模式**（来自 2026-04 AI 时代生存思考文章写作验证）：
 
 1. **讨论阶段**：用户与 AI 就文章主题进行讨论（飞书消息来回）
-2. **检索过往文章**：AI 先读 `post/index.md` 定位相关文章，再只读对应文章了解已有观点
+2. **检索过往文章**：AI 先读 `posts/index.md` 定位相关文章，再只读对应文章了解已有观点
 3. **记录到 memo**：AI 将讨论内容、调研摘要、参考资料链接整理到 `memo.md`
 4. **生成草稿**：AI 基于 memo 生成文章草稿，写入 `主题.md`
 5. **用户修改**：用户在本地修改草稿，幅度通常很大（删 30-50% 内容是常态）
 6. **迭代讨论**：用户发回修改稿 → AI 从修改中学习规则 → 下一轮写得更准
 7. **Git 协作**：每轮修改 commit push，用户 merge 到 main
-8. **更新索引**：文章发布后，在 `post/index.md` 对应分类下追加条目
+8. **更新索引**：文章发布后，在 `posts/index.md` 对应分类下追加条目
 
 **关键特点**：
 - 用户给的是执行型反馈（不是「这里不好」，而是「改成这样」），很高效
@@ -98,7 +98,7 @@ main                        # 已发布的正式内容
 
 ## memo 文件用途
 
-`post/YYYY-MM-主题/memo.md` 是**讨论记录和素材汇总**，包含：
+`posts/YYYY-MM-主题/memo.md` 是**讨论记录和素材汇总**，包含：
 - 行业趋势调研
 - 核心问题讨论（Q&A 形式）
 - 参考资料链接
@@ -263,13 +263,13 @@ main                        # 已发布的正式内容
 ## 参考范例
 
 ### 深度书评
-- 《巨人的陨落》：分析史实与虚构、多线叙事、节奏与厚度、矛盾与冲突。见 `post/2017-06-12-Fall-of-Giants.md`
-- 《异类》：机遇、文化传承两大主题分章节展开。见 `post/2017-06-13-Outliers-The-Story-of-Success.md`
-- 《纳什均衡与博弈论》：批评性书评，指出内容与期待的差距。见 `post/2017-07-02-A-Beautiful-Math.md`
+- 《巨人的陨落》：分析史实与虚构、多线叙事、节奏与厚度、矛盾与冲突。见 `posts/2017-06-12-Fall-of-Giants.md`
+- 《异类》：机遇、文化传承两大主题分章节展开。见 `posts/2017-06-13-Outliers-The-Story-of-Success.md`
+- 《纳什均衡与博弈论》：批评性书评，指出内容与期待的差距。见 `posts/2017-07-02-A-Beautiful-Math.md`
 
 ### 月度阅读报告
-- 一月份阅读报告：4本书，每本精准点评。见 `post/2015-03-23-january-reading-report.markdown`
-- 四月份阅读报告：9本书，优缺点明确。见 `post/2015-05-08-april-reading-report.markdown`
+- 一月份阅读报告：4本书，每本精准点评。见 `posts/2015-03-23-january-reading-report.markdown`
+- 四月份阅读报告：9本书，优缺点明确。见 `posts/2015-05-08-april-reading-report.markdown`
 
 ### 技术观点类（进行中）
-- AI 时代软件工程师适应与能力模型：见 `post/2026-04-ai-era-engineer-adaptation/`
+- AI 时代软件工程师适应与能力模型：见 `posts/2026-04-ai-era-engineer-adaptation/`

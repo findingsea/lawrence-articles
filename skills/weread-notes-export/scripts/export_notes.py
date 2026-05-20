@@ -255,7 +255,7 @@ def main():
     md_content = build_markdown(title, author, bookmarks_by_chapter, chapters_map, reviews_by_chapter)
 
     # 写入文件
-    article_dir = os.path.join(output_dir, "note", f"《{title}》")
+    article_dir = os.path.join(output_dir, "notes", f"《{title}》")
     os.makedirs(article_dir, exist_ok=True)
     filename = f"《{title}》-摘抄.md"
     filepath = os.path.join(article_dir, filename)

@@ -2,7 +2,7 @@
 name: weread-notes-export
 description: |
   微信读书笔记导出工具。输入书名，自动从微信读书获取该书的划线和想法，
-  按章节顺序整理为 Markdown 文件，保存到「note/《书名》/《书名》-摘抄.md」。
+  按章节顺序整理为 Markdown 文件，保存到「notes/《书名》/《书名》-摘抄.md」。
   触发词：导出笔记、导出划线、导出摘抄、微信读书笔记、weread notes、导出微信读书笔记。
 ---
 
@@ -24,7 +24,7 @@ python3 "{SKILL_DIR}/scripts/export_notes.py <书名>" [--output <输出目录>]
 - `<书名>`：要导出笔记的书籍名称（模糊匹配，取搜索结果第一本）
 - `--output`：输出根目录，默认 `~/Workspace/lawrence-articles`
 
-输出路径：`<输出目录>/note/《书名》/《书名》-摘抄.md`
+输出路径：`<输出目录>/notes/《书名》/《书名》-摘抄.md`
 
 ## 输出格式
 
