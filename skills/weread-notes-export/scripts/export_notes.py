@@ -7,11 +7,13 @@
 import json
 import sys
 import os
-import subprocess
+import urllib.request
+import urllib.error
 from datetime import datetime
 
 API_BASE = "https://i.weread.qq.com/api/agent/gateway"
 SKILL_VERSION = "1.0.3"
+
 
 def get_env(key):
     val = os.environ.get(key)
@@ -19,21 +21,29 @@ def get_env(key):
         raise ValueError(f"未找到环境变量 {key}，请先配置微信读书 API Key")
     return val
 
+
 def api_call(api_name, **params):
     api_key = get_env("WEREAD_API_KEY")
-    payload = {"api_name": api_name, "skill_version": SKILL_VERSION, **params}
-    result = subprocess.run(
-        ["curl", "-s", "-X", "POST", API_BASE,
-         "-H", f"Authorization: Bearer {api_key}",
-         "-H", "Content-Type: application/json",
-         "-d", json.dumps(payload)],
-        capture_output=True, text=True
+    payload = json.dumps({"api_name": api_name, "skill_version": SKILL_VERSION, **params}).encode("utf-8")
+    req = urllib.request.Request(
+        API_BASE,
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
     )
-    resp = json.loads(result.stdout)
-    # errcode 存在且非 0 才是错误
-    if "errcode" in resp and resp["errcode"] != 0:
-        raise Exception(f"API 错误 ({api_name}): {resp.get('message', resp)}")
-    return resp
+    try:
+        with urllib.request.urlopen(req) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        raise Exception(f"API HTTP 错误 ({api_name}): {e.code} {body}")
+    if "errcode" in data and data["errcode"] != 0:
+        raise Exception(f"API 错误 ({api_name}): {data.get('errmsg', data)}")
+    return data
+
 
 def search_book(keyword):
     resp = api_call("/store/search", keyword=keyword, scope=10, count=10)
@@ -56,8 +66,9 @@ def search_book(keyword):
             return {"bookId": info["bookId"], "title": info["title"], "author": info.get("author", "未知")}
     return None
 
+
 def find_book_in_notebooks(keyword):
-    """从 notebooks 列表中找到含关键词且有多条的书籍"""
+    """从 notebooks 列表中找到含关键词且笔记最多的书籍"""
     resp = api_call("/user/notebooks", count=100)
     best_match = None
     best_count = 0
@@ -73,19 +84,18 @@ def find_book_in_notebooks(keyword):
             best_count = total
     return best_match
 
-def get_chapters(bookId):
-    resp = api_call("/book/chapterinfo", bookId=bookId)
+
+def get_chapters(book_id):
+    resp = api_call("/book/chapterinfo", bookId=book_id)
     chapters = resp.get("chapters", [])
-    # 按 chapterIdx 排序
     chapters.sort(key=lambda c: c.get("chapterIdx", 0))
     return {c["chapterUid"]: c for c in chapters}
 
-def get_all_bookmarks(bookId):
+
+def get_all_bookmarks(book_id):
     """获取所有划线，按 chapterUid 分组"""
-    resp = api_call("/book/bookmarklist", bookId=bookId)
+    resp = api_call("/book/bookmarklist", bookId=book_id)
     bookmarks_by_chapter = {}
-    # 从返回的 chapters 中建立 uid -> title 映射
-    chapters_map = {c["chapterUid"]: c["title"] for c in resp.get("chapters", [])}
     for bm in resp.get("updated", []):
         uid = bm["chapterUid"]
         if uid not in bookmarks_by_chapter:
@@ -96,37 +106,43 @@ def get_all_bookmarks(bookId):
             "text": bm["markText"],
             "range": bm.get("range", ""),
             "date": date_str,
-            "chapterUid": uid,
         })
-    return bookmarks_by_chapter, chapters_map
+    return bookmarks_by_chapter
 
-def get_all_reviews(bookId):
-    """获取所有想法/点评，按章节名分组"""
+
+def get_all_reviews(book_id):
+    """获取所有想法/点评，按 chapterUid 分组"""
     reviews_by_chapter = {}
     synckey = 0
     while True:
-        resp = api_call("/review/list/mine", bookid=bookId, synckey=synckey, count=50)
+        resp = api_call("/review/list/mine", bookid=book_id, synckey=synckey, count=50)
         reviews = resp.get("reviews", [])
         for r in reviews:
             rev = r.get("review", {})
             content = rev.get("content", "").strip()
             if not content:
                 continue
-            chapter_name = rev.get("chapterName", "")
+            uid = rev.get("chapterUid", 0)
+            chapter_name = rev.get("chapterName", rev.get("chapterTitle", ""))
             ts = rev.get("createTime", 0)
             date_str = datetime.fromtimestamp(ts).strftime("%Y-%m-%d") if ts else ""
-            if chapter_name not in reviews_by_chapter:
-                reviews_by_chapter[chapter_name] = []
-            reviews_by_chapter[chapter_name].append({
+            abstract = rev.get("abstract", "").strip()
+            context = rev.get("contextAbstract", "").strip()
+            if uid not in reviews_by_chapter:
+                reviews_by_chapter[uid] = []
+            reviews_by_chapter[uid].append({
                 "content": content,
                 "chapterName": chapter_name,
                 "date": date_str,
+                "abstract": abstract,
+                "context": context,
             })
         has_more = resp.get("hasMore", 0)
         synckey = resp.get("synckey", 0)
         if not has_more:
             break
     return reviews_by_chapter
+
 
 def build_markdown(book_title, author, bookmarks_by_chapter, chapters_map, reviews_by_chapter):
     lines = []
@@ -135,31 +151,48 @@ def build_markdown(book_title, author, bookmarks_by_chapter, chapters_map, revie
     lines.append(f"导出时间：{datetime.now().strftime('%Y-%m-%d')}\n")
     lines.append("---\n")
 
-    # 只输出有笔记的章节
+    total_bookmarks = 0
+    total_reviews = 0
+    chapters_with_notes = 0
+
+    # 只输出有笔记的章节，按章节顺序
     for chapter_uid in sorted(chapters_map.keys()):
         chapter_info = chapters_map[chapter_uid]
         chapter_title = chapter_info["title"] if isinstance(chapter_info, dict) else chapter_info
 
         bms = bookmarks_by_chapter.get(chapter_uid, [])
-        chapter_reviews = reviews_by_chapter.get(chapter_title, [])
+        chapter_reviews = reviews_by_chapter.get(chapter_uid, [])
 
         # 跳过无笔记的章节
         if not bms and not chapter_reviews:
             continue
 
+        chapters_with_notes += 1
         lines.append(f"\n## {chapter_title}\n")
 
         # 划线
         for bm in bms:
             lines.append(f'> {bm["text"]}\n')
-            lines.append(f'*—— {bm["date"]}*\n')
+            if bm["date"]:
+                lines.append(f'*—— {bm["date"]}*\n')
+            total_bookmarks += 1
 
-        # 想法（按章节名匹配）
+        # 想法（按 chapterUid 匹配）
         for r in chapter_reviews:
+            # 如果有划线原文上下文，先显示
+            if r["abstract"]:
+                lines.append(f'> {r["abstract"]}\n')
             lines.append(f'**想法：** {r["content"]}\n')
-            lines.append(f'*—— {r["date"]}*\n')
+            if r["date"]:
+                lines.append(f'*—— {r["date"]}*\n')
+            total_reviews += 1
+
+    # 末尾统计
+    lines.append("\n---\n")
+    lines.append(f"共 {chapters_with_notes} 个章节有笔记，{total_bookmarks} 条划线，{total_reviews} 条想法\n")
 
     return "".join(lines)
+
 
 def main():
     if len(sys.argv) < 2:
@@ -193,7 +226,7 @@ def main():
     chapters_map = get_chapters(book_id)
 
     print("获取划线笔记...")
-    bookmarks_by_chapter, _ = get_all_bookmarks(book_id)
+    bookmarks_by_chapter = get_all_bookmarks(book_id)
     total_bookmarks = sum(len(v) for v in bookmarks_by_chapter.values())
     print(f"共 {total_bookmarks} 条划线")
 
@@ -212,7 +245,7 @@ def main():
             author = alt_info["author"]
             print(f"匹配到：《{title}》 {author}（bookId: {book_id}）")
             chapters_map = get_chapters(book_id)
-            bookmarks_by_chapter, _ = get_all_bookmarks(book_id)
+            bookmarks_by_chapter = get_all_bookmarks(book_id)
             total_bookmarks = sum(len(v) for v in bookmarks_by_chapter.values())
             reviews_by_chapter = get_all_reviews(book_id)
             total_reviews = sum(len(v) for v in reviews_by_chapter.values())
@@ -231,6 +264,7 @@ def main():
 
     print(f"✅ 已保存至：{filepath}")
     return filepath
+
 
 if __name__ == "__main__":
     main()
