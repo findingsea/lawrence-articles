@@ -20,8 +20,8 @@ lawrence-articles/
 │   └── YYYY-MM-文章主题/            # 每篇文章一个文件夹
 │       ├── 文章主题.md               # 主文章
 │       ├── memo.md                  # 调研笔记、讨论记录
-│       └── image/                   # 图片素材
-└── image/             # 根级图片资源（较少用）
+│       └── images/                   # 图片素材
+└── images/             # 根级图片资源（较少用）
 ```
 
 **说明**：不单独设 `draft/` 目录，所有文章（含进行中和已发布的）都放在 `posts/` 下，用 Git 分支区分状态。写新文章时从 main 新建 feature 分支，merge 后即发布。
@@ -60,7 +60,7 @@ lawrence-articles/
 **注意**：
 - 文章文件**与文件夹同名**（去掉日期前缀）
 - memo 文件**保持原名** `memo.md`，用于记录讨论和素材
-- 图片放在 `posts/YYYY-MM-主题/image/` 下
+- 图片放在 `posts/YYYY-MM-主题/images/` 下
 
 ## 协作写作流程（已验证版本）
 
