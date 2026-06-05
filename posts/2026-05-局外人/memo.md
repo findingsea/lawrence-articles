@@ -1,3 +1,9 @@
+---
+theme: default
+themeName: "默认主题"
+title: "memo"
+---
+
 # memo：加缪《局外人》读后感
 
 ## 文章方向
