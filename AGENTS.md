@@ -94,7 +94,7 @@ main                        # 已发布的正式内容
 ```
 
 - 每次 push 到 feature 分支，用户 merge 到 main
-- commit message 用 `feat:` `fix:` `refactor:` `style:` 等前缀
+- commit message 用 `🦞claw:feat:` `🦞claw:fix:` `🦞claw:refactor:` `🦞claw:style:` 等前缀
 
 ## memo 文件用途
 
