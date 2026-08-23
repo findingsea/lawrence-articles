@@ -37,19 +37,22 @@ Senior 也重度依赖 AI，区别在于他的依赖是「带着怀疑的依赖�
 
 重心分配：前半部分把问题讲透，后半部分给两三个具体动作就够，不写成管理指南。
 
-## 三、调研素材（2026-08-22）
+## 三、调研素材（2026-08-22 调研，2026-08-23 全部验证一手来源）
 
-### 研究类（有明确来源，可直接引用）
+### 研究类（已验证，可直接引用）
 
-1. **Anthropic 随机对照实验**：52 名工程师（多数 junior），使用 AI 的组在后续理解测验中得分低 17%，差距最大的是 debugging。内部分化明显——重度委托任务给 AI 的人学得最少；拿 AI 追问概念性问题的人学到最多。
-   来源：Anthropic 2026 年 coding skill formation 研究（多个独立来源转引，写作时需找到原始报告链接核实）
-2. **Microsoft Research**：对 AI 工具信心越强，批判性思维越弱；对自身能力信心越强，批判性思维反而越强。
-3. **Stanford（Brynjolfsson 团队，ADP 工资单数据）**：22-25 岁在 AI 暴露度最高的职业中，就业相对下降 13%；同职业 30 岁以上反而增长。论文题 "Canaries in the Coal Mine"。
-4. **Stack Overflow 2025 开发者调查**：66% 开发者最大抱怨是「AI 的方案几乎对但不完全对」；45% 说调试 AI 输出比自己从头写更花时间。
+1. **Anthropic 随机对照实验**：52 名工程师（多数 junior），学陌生 Python 库 Trio。AI 组测验均分 50%，手写组 67%（低 17 个百分点，Cohen's d=0.738, p=0.01），差距最大是 debugging。用法分化：完全委托 AI 写代码的人 <40 分；拿 AI 追问概念的人 65+ 分。
+   一手来源：[anthropic.com/research/AI-assistance-coding-skills](https://www.anthropic.com/research/AI-assistance-coding-skills)
+2. **微软 + 卡内基梅隆（CHI 2025）**：319 名知识工作者、936 个案例。对 GenAI 信心越强，批判性思维越弱；对自身能力信心越强，批判性思维越强。
+   一手来源：Microsoft Research 出版页（Lee, Sarkar et al., CHI '25, DOI 10.1145/3706598.3713778）
+3. **Stanford（Brynjolfsson 团队，ADP 工资单数据）**：22-25 岁在 AI 暴露度最高的职业中，就业相对下降 13%；同职业年长者持平或增长。论文 "Canaries in the Coal Mine?"。
+   一手来源：[digitaleconomy.stanford.edu（论文 PDF）](https://digitaleconomy.stanford.edu/wp-content/uploads/2025/08/Canaries_BrynjolfssonChandarChen.pdf)
+4. **Stack Overflow 2025 开发者调查**：66% 最大抱怨「AI 方案几乎对但不完全对」；45% 说调试 AI 输出比自己从头写更花时间（31,476 份回复）。
+   一手来源：[survey.stackoverflow.co/2025/ai](https://survey.stackoverflow.co/2025/ai)
 
-### 概念类（可化用观点，不抄原句）
+### 概念类（已验证）
 
-5. **AI drag**（Microsoft Russinovich & Hanselman 提出）：AI 放大 senior 的能力，同时拖累 junior——因为 junior 缺少「掌舵和验证 agent 输出」所需的系统知识。
+5. **AI drag**（Russinovich & Hanselman）：两人 2026 年 2 月在 Communications of the ACM 发论文《Redefining the Engineering Profession for AI》提出该术语——AI 放大 senior，拖累 early-in-career 开发者。论文还提出 preceptor 模式（借鉴医学的带教制）。报道见 Computing、InfoQ、The Register。
 6. **学徒制断裂**：英文圈热讨论。「AI 不是删掉了浪费，是删掉了课程表、保留了考试」「junior 工作的产出从来不是重点，学习才是产品，工单只是载体」。
 7. **Kent Beck**：「我 90% 技能的价值归零了，剩下 10% 的杠杆翻了 1000 倍」——但这句话的前提是他已经有了那 10%。Junior 的问题是那 10% 还没长出来。
 8. **经验悖论**：公司想雇有经验的人，但没人能获得经验的话，有经验的人从哪来。今天不招 junior，五年后的 senior 从哪来。
@@ -81,7 +84,7 @@ Senior 也重度依赖 AI，区别在于他的依赖是「带着怀疑的依赖�
 
 ## 六、待办
 
-- [ ] 核实 Anthropic 研究的原始链接
-- [ ] 生成第一版草稿
+- [x] 核实 Anthropic 研究的原始链接（2026-08-23 已验证，全部数据点均有一手来源）
+- [x] 生成第一版草稿
 - [ ] 迭代修改
 - [ ] merge 后更新 posts/index.md（分类：工程师成长）
