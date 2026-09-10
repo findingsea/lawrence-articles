@@ -1,6 +1,6 @@
 ---
-theme: default
-themeName: "默认主题"
+theme: knowledge-base
+themeName: "知识库"
 title: "AI 时代的成长困境"
 ---
 
