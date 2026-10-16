@@ -105,11 +105,12 @@ lawrence-articles/
 ### Git 分支使用规范
 
 ```
-feature/YYYY-MM-文章主题   # 当前文章的分支
+feature/YYYY-MM-topic-slug  # 当前文章或改动的分支，例如 feature/2026-10-workism
 main                        # 已发布的正式内容
 ```
 
-- 每次 push 到 feature 分支，用户 merge 到 main
+- **不允许直接在 `main` 分支上修改或提交。** 开始改动前，从 `main` 新建 feature 分支；完成后 push 到 feature 分支，由用户 review 并 merge 到 `main`。
+- **分支名不能包含中文。** 使用小写英文、数字和连字符组成简短 slug，保留 `feature/YYYY-MM-` 前缀。
 - commit message 用 `🦞claw:feat:` `🦞claw:fix:` `🦞claw:refactor:` `🦞claw:style:` 等前缀
 
 ### 一篇长文的完整周期（2026-09-30 → 10-10《下坡要开心》复盘）
