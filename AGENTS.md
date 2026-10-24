@@ -52,8 +52,8 @@ lawrence-articles/
 
 ### Git 约定
 
-- 新文章从 `main` 建立 `feature/YYYY-MM-文章主题` 分支；进行中的文章沿用其 feature 分支。
-- 用户 merge 到 `main` 后即视为发布。
+- 不得直接在 `main` 分支上修改或提交。新改动从 `main` 建立 feature 分支，完成后 push 到该分支，由用户 review 并 merge 到 `main`。
+- 分支命名格式为 `feature/YYYY-MM-topic-slug`，例如 `feature/2026-10-workism`。slug 使用简短的小写英文、数字和连字符，不含中文；进行中的文章沿用已有 feature 分支。
 - commit message 使用 `🦞claw:feat:`、`🦞claw:fix:`、`🦞claw:refactor:`、`🦞claw:style:` 等前缀。
 
 ## Memo 规范
