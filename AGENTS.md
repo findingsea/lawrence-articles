@@ -155,6 +155,7 @@ lawrence-articles/
 - 图片尺寸 900×383，比例约 2.35:1。
 - 优先使用用户图床 `https://img.wemd.app/...`；历史文章也使用过 GitHub raw 链接。
 - 原图归档到 `posts/YYYY-MM-主题/images/主题-封面.png`。设计源文件和草稿图放项目根目录，定稿图才放进文章 `images/`。
+- **过程中的中间产物禁止入库**：生成封面时先产出的 1024 原图、设计源文件、草稿图一律留在项目根目录，**任何情况下都不提交到任何分支（含 `main`）**。只有最终裁好的 900×383 定稿图放进 `posts/YYYY-MM-主题/images/主题-封面.png` 并提交。已误入库的用 `git rm --cached` 移除并加入 `.gitignore`（模式见仓库 `.gitignore`）。
 
 ## 参考文章
 
