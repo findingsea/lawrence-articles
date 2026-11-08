@@ -31,3 +31,5 @@ draft/*.temp
 封面-草稿*
 封面-源文件*
 cover-*-raw.*
+# 图像生成工具自动保存的中间原图
+generated_images/
